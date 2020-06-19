@@ -38,7 +38,6 @@ int main(int argc, char const *argv[])
   if (argv[1] == list_action)
   {
     return list_messages(diary_file_name);
-    
   }
 
   std::string new_message;
@@ -72,16 +71,18 @@ void show_help(const std::string &program_name)
 void add_message(const std::string &file_name, const std::string message)
 {
   std::ofstream diary(file_name, std::ios::app);
-  diary << "- " << get_current_time()<< " " << message << std::endl;
+  diary << "- " << get_current_time() << " " << message << std::endl;
   std::cout << "Messagem Adicionana" << std::endl;
 }
 
-int list_messages(const std::string &file_name){
+int list_messages(const std::string &file_name)
+{
   std::ifstream file;
 
   file.open(file_name);
 
-  if (!file.is_open()) {
+  if (!file.is_open())
+  {
     std::cerr << "Arquivo não existente ou sem permissão de leitura."
               << std::endl;
     return 1;
@@ -91,27 +92,34 @@ int list_messages(const std::string &file_name){
 
   int line_number = 0;
 
-  while (!file.eof()) {
+  while (!file.eof())
+  {
     ++line_number;
     std::getline(file, message);
 
-    if (message.size() == 0) {
+    if (message.size() == 0)
+    {
       continue;
     }
 
-    std::cout << message << std::endl;
+    if ((message.find("#") == std::string::npos))
+    {
+      std::cout << message << std::endl;
+    }
   }
 
   file.close();
   return 0;
 }
 
-bool find_today_title(const std::string &file_name){
+bool find_today_title(const std::string &file_name)
+{
   std::ifstream file;
 
   file.open(file_name);
 
-  if (!file.is_open()) {
+  if (!file.is_open())
+  {
     std::cerr << "Arquivo não existente ou sem permissão de leitura."
               << std::endl;
     exit(1);
@@ -121,15 +129,18 @@ bool find_today_title(const std::string &file_name){
 
   int line_number = 0;
 
-  while (!file.eof()) {
+  while (!file.eof())
+  {
     ++line_number;
     std::getline(file, message);
 
-    if (message.size() == 0) {
+    if (message.size() == 0)
+    {
       continue;
     }
 
-    if(message.find(get_current_date())!= std::string::npos){
+    if (message.find(get_current_date()) != std::string::npos)
+    {
       return false;
     }
   }
@@ -138,15 +149,17 @@ bool find_today_title(const std::string &file_name){
   return true;
 }
 
-void add_today_title(const std::string &file_name){
-  if(find_today_title(file_name) == 1){
+void add_today_title(const std::string &file_name)
+{
+  if (find_today_title(file_name) == 1)
+  {
     std::ofstream diary(file_name, std::ios::app);
     diary << "# " << get_current_date() << std::endl;
   }
-  
 }
 
-std::string format_current_date(const std::string &format) {
+std::string format_current_date(const std::string &format)
+{
   std::time_t time = std::time(nullptr);
   char result[1024];
 
