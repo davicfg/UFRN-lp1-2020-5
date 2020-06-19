@@ -2,8 +2,8 @@
 #include <string>
 #include <fstream>
 
-void show_help(const std::string &programName);
-void add_mesage(const std::string &file_name, const std::string mesage);
+void show_help(const std::string &program_name);
+void add_message(const std::string &file_name, const std::string message);
 int list_messages(const std::string &file_name);
 
 int main(int argc, char const *argv[])
@@ -33,36 +33,36 @@ int main(int argc, char const *argv[])
     
   }
 
-  std::string newMessage;
+  std::string new_message;
 
   if (argc == 2)
   {
     std::cout << "Informe a mensagem" << std::endl;
-    std::getline(std::cin, newMessage);
+    std::getline(std::cin, new_message);
 
-    add_mesage(diary_file_name, newMessage);
+    add_message(diary_file_name, new_message);
 
     return 0;
   }
   else
   {
-    newMessage = argv[2];
+    new_message = argv[2];
 
-    add_mesage(diary_file_name, newMessage);
+    add_message(diary_file_name, new_message);
 
     return 0;
   }
 }
 
-void show_help(const std::string &programName)
+void show_help(const std::string &program_name)
 {
-  std::cout << programName << " add <message>" << std::endl;
+  std::cout << program_name << " add <message>" << std::endl;
 }
 
-void add_mesage(const std::string &file_name, const std::string mesage)
+void add_message(const std::string &file_name, const std::string message)
 {
   std::ofstream diary(file_name, std::ios::app);
-  diary << mesage << std::endl;
+  diary << message << std::endl;
   std::cout << "Messagem Adicionana" << std::endl;
 }
 
