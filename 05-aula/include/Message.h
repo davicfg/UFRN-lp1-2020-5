@@ -1,3 +1,6 @@
+#ifndef W5NAULA05_MESSAGE_H
+#define W5NAULA05_MESSAGE_H
+
 #include <string>
 
 struct Message
@@ -7,3 +10,4 @@ struct Message
   std::string content;
 };
 
+#endif

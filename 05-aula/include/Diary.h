@@ -1,3 +1,6 @@
+#ifndef W5NAULA05_DIARY_H
+#define W5NAULA05_DIARY_H
+
 #include <string>
 
 struct Diary
@@ -9,3 +12,4 @@ struct Diary
   bool find_today_title(const std::string &file_name);
   void add_today_title(const std::string &file_name);
 };
+#endif
