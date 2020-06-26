@@ -19,7 +19,16 @@ void Diary::add(const std::string &message)
 {
   if (messages_size >= messages_capacity)
   {
-    return;
+    //TODO: fazer um método privado em Diary para colocar esses passos lá
+    messages_capacity*=2;
+    Message* new_messages = new Message[messages_capacity];
+
+    for (size_t i = 0; i < messages_size; i++)
+    {
+      new_messages[i] = messages[i];
+    }
+    
+    messages = new_messages;
   }
 
   Message m;
