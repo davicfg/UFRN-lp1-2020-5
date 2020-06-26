@@ -17,5 +17,6 @@ struct Diary
 
   void add(const std::string& message);
   void write();
+  int load_messages();
 };
 #endif
