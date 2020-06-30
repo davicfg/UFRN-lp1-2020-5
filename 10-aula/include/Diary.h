@@ -20,6 +20,7 @@ struct Diary
   void write();
   int load_messages();
   void upgrade_messages_array();
+  Message* search(const std::string& what);
 
 };
 #endif

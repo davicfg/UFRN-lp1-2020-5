@@ -136,3 +136,15 @@ void Diary::upgrade_messages_array()
     messages = new_messages;
   }
 }
+
+Message* Diary::search(const std::string& what)
+{
+  for (size_t i = 0; i < messages_size; i++)
+  {
+    std::size_t found = messages[i].content.find(what);
+    if(found < std::string::npos){
+      return &messages[i];
+    }
+  }
+  return nullptr;
+}
