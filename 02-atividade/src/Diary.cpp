@@ -17,19 +17,7 @@ Diary::~Diary()
 
 void Diary::add(const std::string &message)
 {
-  if (messages_size >= messages_capacity)
-  {
-    //TODO: fazer um método privado em Diary para colocar esses passos lá
-    messages_capacity*=2;
-    Message* new_messages = new Message[messages_capacity];
-
-    for (size_t i = 0; i < messages_size; i++)
-    {
-      new_messages[i] = messages[i];
-    }
-    
-    messages = new_messages;
-  }
+  upgrade_messages_array();
 
   Message m;
 
@@ -43,6 +31,11 @@ void Diary::add(const std::string &message)
 
 void Diary::write()
 {
+  //TODO: talvez não seja a melhor forma de fazer isso!
+  std::ofstream ofs;
+  ofs.open(filename, std::ofstream::out | std::ofstream::trunc);
+  ofs.close();
+
   std::string current_date = "";
   for (size_t i = 0; i < messages_size; i++)
   {
@@ -93,7 +86,6 @@ int Diary::load_messages()
       char discard;
 
       stream >> discard;
-      stream >> discard;
       stream >> current_date;
     }
     else
@@ -112,9 +104,35 @@ int Diary::load_messages()
       getline(stream, m.content);
 
       m.content = m.content.substr(1);
+      add(m);
     }
   }
 
   file.close();
   return 0;
+}
+
+void Diary::add(const Message message)
+{
+  upgrade_messages_array();
+
+  messages[messages_size] = message;
+  messages_size++;
+}
+
+void Diary::upgrade_messages_array()
+{
+  if (messages_size >= messages_capacity)
+  {
+    //TODO: fazer um método privado em Diary para colocar esses passos lá
+    messages_capacity *= 2;
+    Message *new_messages = new Message[messages_capacity];
+
+    for (size_t i = 0; i < messages_size; i++)
+    {
+      new_messages[i] = messages[i];
+    }
+
+    messages = new_messages;
+  }
 }

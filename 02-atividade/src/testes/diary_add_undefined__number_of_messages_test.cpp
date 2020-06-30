@@ -34,5 +34,27 @@ int main(int argc, char* argv[])
     d.add("msg 11");
     d.messages[8].date.set_from_string("26/06/2020");
     d.write();
+
+    d.add("msg 11");
+    d.add("ldasd");
+    d.add("mssdsadg 11");
+    d.add("msdasdasdg 11");
+    d.add("msqweeg 11");
+    d.add("ms213g 11");
+    d.add("msqewe231g 11");
+    d.add("ms123g 11");
+    d.add("msg213 11");
+    d.add("ms123g 11");
+    d.add("ms123g 11");
+    d.add("ms123g 11");
+    d.add("msg123 11");
+    d.add("msg123 11");
+    d.add("ms213g 11");
+    d.add("msggh 11");
+    d.add("msqwesfgg 11");
+    d.add("msfghg 11");
+
+    d.write();
+    std::cout << d.messages_capacity << std::endl;
     return 0;
 }

@@ -9,6 +9,7 @@ App::App(const std::string &filename) : diary(filename)
 
 int App::run(int argc, char const *argv[])
 {
+  diary.load_messages();
   if (argc == 1)
   {
     return show_help(argv[0]);
@@ -41,28 +42,32 @@ int App::run(int argc, char const *argv[])
 
 int App::show_help(const std::string &main_name)
 {
+  std::cout << "Uso:" << std::endl;
+  std::cout << "  " << main_name << " add <message>" << std::endl;
+  std::cout << "  " << main_name << " list" << std::endl;
   return 1;
 }
 
 void App::add()
 {
-    std::string message;
-    std::cout << "Enter your message:" << std::endl;
-    std::getline(std::cin, message);
+  std::string message;
+  std::cout << "Enter your message:" << std::endl;
+  std::getline(std::cin, message);
 
-    add(message);
+  add(message);
 }
 
-void App::add(const std::string& message)
+void App::add(const std::string &message)
 {
-    diary.add(message);
-    diary.write();
+  diary.add(message);
+  diary.write();
 }
 
 void App::list_messages()
 {
-    for (size_t i = 0; i < diary.messages_size; ++i) {
-        const Message& message = diary.messages[i];
-        std::cout << "-" << message.content << std::endl;
-    }
+  for (size_t i = 0; i < diary.messages_size; ++i)
+  {
+    const Message &message = diary.messages[i];
+    std::cout << "- " << message.content << std::endl;
+  }
 }

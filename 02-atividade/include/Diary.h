@@ -16,7 +16,10 @@ struct Diary
   size_t messages_capacity;
 
   void add(const std::string& message);
+  void add(const Message message);
   void write();
   int load_messages();
+  void upgrade_messages_array();
+
 };
 #endif

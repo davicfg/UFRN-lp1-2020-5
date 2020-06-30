@@ -24,7 +24,7 @@ std::string Date::to_string()
     std::stringstream stream;
 
     if (day < 10) {
-        stream << 0;
+        stream << "0";
     }
     stream << day;
     stream << '/';
