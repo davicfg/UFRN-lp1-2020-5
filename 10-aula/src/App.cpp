@@ -27,6 +27,12 @@ int App::run(int argc, char const *argv[])
     {
       add(argv[2]);
     }
+  }else if(input_action == "search"){
+    if(argc == 2){
+      search();
+    }else{
+      search(argv[2]);
+    }
   }
   else if (input_action == "list")
   {
@@ -70,4 +76,23 @@ void App::list_messages()
     const Message &message = diary.messages[i];
     std::cout << "- " << message.content << std::endl;
   }
+}
+
+void App::search(){
+  std::string term;
+  std::cout << "Enter the term to search: " << std::endl;
+
+   std::getline(std::cin, term);
+
+   search(term);
+}
+
+void App::search(const std::string& what){
+  Message* found = diary.search(what);
+
+  if(found == nullptr){
+    std::cout << "Message not found" << std::endl;
+  }
+  std::cout << found->content << std::endl;
+  
 }
