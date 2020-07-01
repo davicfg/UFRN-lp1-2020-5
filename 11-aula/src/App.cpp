@@ -95,11 +95,11 @@ void App::search()
 void App::search(const std::string &what)
 {
   Message *found = diary.search(what);
-  
+  std::cout << "App::search: "<< found << std::endl;
   if (found != nullptr)
   {
     std::cout << found->content << std::endl;
+  }else{
+    std::cout << "Message not found" << std::endl;
   }
-
-  std::cout << "Message not found" << std::endl;
 }

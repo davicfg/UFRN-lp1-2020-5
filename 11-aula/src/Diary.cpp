@@ -33,7 +33,8 @@ void Diary::write()
 
   std::string current_date = "";
 
-  for(Message ms: messages){
+  for (Message ms : messages)
+  {
 
     if (ms.date.to_string() != current_date)
     {
@@ -128,14 +129,27 @@ void Diary::add(const Message message)
 //   }
 // }
 
-Message* Diary::search(const std::string& what)
+Message *Diary::search(const std::string &what)
 {
-  for(Message ms: messages){
-    std::size_t found = ms.content.find(what);
-    if(found < std::string::npos){
-      return &ms;
+  for (auto it = messages.begin(); it != messages.end(); it++)
+  {
+    std::size_t found = (*it).content.find(what);
+    if (found != std::string::npos)
+    {
+      std::cout << "Diary::search: "<< &(*it) << std::endl;
+      return &(*it);
     }
   }
+  
+  // for (Message ms : messages)
+  // {
+  //   std::size_t found = ms.content.find(what);
+  //   if (found != std::string::npos)
+  //   {
+  //     std::cout << "Diary::search: " << &ms << std::endl;
+  //     return &ms;
+  //   }
+  // }
 
   return nullptr;
 }
