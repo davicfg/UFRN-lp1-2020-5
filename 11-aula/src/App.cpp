@@ -82,7 +82,7 @@ void App::list_messages()
   }
 }
 
-void App::search()
+int App::search()
 {
   std::string term;
   std::cout << "Enter the term to search: " << std::endl;
@@ -92,14 +92,15 @@ void App::search()
   search(term);
 }
 
-void App::search(const std::string &what)
+int App::search(const std::string &what)
 {
   Message *found = diary.search(what);
-  std::cout << "App::search: "<< found << std::endl;
+  std::cout << "App::search: " << found << std::endl;
   if (found != nullptr)
   {
     std::cout << found->content << std::endl;
-  }else{
-    std::cout << "Message not found" << std::endl;
+    return 0;
   }
+
+  std::cout << "Message not found" << std::endl;
 }
