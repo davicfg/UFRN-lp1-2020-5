@@ -129,27 +129,27 @@ void Diary::add(const Message message)
 //   }
 // }
 
-Message *Diary::search(const std::string &what)
+std::vector<Message*> Diary::search(const std::string &what)
 {
+  std::vector<Message*> founded_messages;
+
   for (auto it = messages.begin(); it != messages.end(); it++)
   {
     std::size_t found = (*it).content.find(what);
     if (found != std::string::npos)
     {
-      std::cout << "Diary::search: "<< &(*it) << std::endl;
-      return &(*it);
+      founded_messages.push_back(&(*it));
     }
   }
-  
   // for (Message ms : messages)
   // {
   //   std::size_t found = ms.content.find(what);
   //   if (found != std::string::npos)
   //   {
-  //     std::cout << "Diary::search: " << &ms << std::endl;
+  //     std::cout << "Diary::search" << &ms << std::endl;
   //     return &ms;
   //   }
   // }
 
-  return nullptr;
+  return founded_messages;
 }

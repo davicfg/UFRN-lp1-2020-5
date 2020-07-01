@@ -89,18 +89,23 @@ int App::search()
 
   std::getline(std::cin, term);
 
-  search(term);
+  return search(term);
 }
 
 int App::search(const std::string &what)
 {
-  Message *found = diary.search(what);
-  std::cout << "App::search: " << found << std::endl;
-  if (found != nullptr)
+  std::vector<Message *> found_messages = diary.search(what);
+
+  if (found_messages.size() == 0)
   {
-    std::cout << found->content << std::endl;
-    return 0;
+    std::cout << "Term '" << what << "' not found." << std::endl;
+    return 1;
   }
 
-  std::cout << "Message not found" << std::endl;
+  for (Message *message : found_messages)
+  {
+    std::cout << message->content << std::endl;
+  }
+
+  return 0;
 }
