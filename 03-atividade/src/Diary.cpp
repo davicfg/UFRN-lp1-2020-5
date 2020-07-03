@@ -5,29 +5,23 @@
 #include <sstream>
 #include <string>
 
-Diary::Diary(const std::string &name) : filename(name), messages(nullptr), messages_size(0), messages_capacity(10)
+Diary::Diary(const std::string &name) : filename(name)
 {
-  messages = new Message[messages_capacity];
-  
 }
 
 Diary::~Diary()
 {
-  delete[] messages;
 }
 
 void Diary::add(const std::string &message)
 {
-  upgrade_messages_array();
-
   Message m;
 
   m.content = message;
   m.date.set_from_string(get_current_date());
   m.time.set_from_string(get_current_time());
 
-  messages[messages_size] = m;
-  messages_size++;
+  messages.push_back(m);
 }
 
 void Diary::write()
@@ -38,20 +32,20 @@ void Diary::write()
   ofs.close();
 
   std::string current_date = "";
-  for (size_t i = 0; i < messages_size; i++)
-  {
-    Message message = messages[i];
 
-    if (message.date.to_string() != current_date)
+  for (Message ms : messages)
+  {
+
+    if (ms.date.to_string() != current_date)
     {
       std::ofstream diary(filename, std::ios::app);
-      diary << "# " << message.date.to_string() << std::endl;
+      diary << "# " << ms.date.to_string() << std::endl;
     }
 
     std::ofstream diary(filename, std::ios::app);
-    diary << "- " << message.time.to_string() << " " << message.content << std::endl;
+    diary << "- " << ms.time.to_string() << " " << ms.content << std::endl;
 
-    current_date = message.date.to_string();
+    current_date = ms.date.to_string();
   }
 }
 
@@ -115,25 +109,47 @@ int Diary::load_messages()
 
 void Diary::add(const Message message)
 {
-  upgrade_messages_array();
-
-  messages[messages_size] = message;
-  messages_size++;
+  messages.push_back(message);
 }
 
-void Diary::upgrade_messages_array()
+// void Diary::upgrade_messages_array()
+// {
+//   if (messages_size >= messages_capacity)
+//   {
+//     //TODO: fazer um método privado em Diary para colocar esses passos lá
+//     messages_capacity *= 2;
+//     Message *new_messages = new Message[messages_capacity];
+
+//     for (size_t i = 0; i < messages_size; i++)
+//     {
+//       new_messages[i] = messages[i];
+//     }
+
+//     messages = new_messages;
+//   }
+// }
+
+std::vector<Message*> Diary::search(const std::string &what)
 {
-  if (messages_size >= messages_capacity)
+  std::vector<Message*> founded_messages;
+
+  for (auto it = messages.begin(); it != messages.end(); it++)
   {
-    //TODO: fazer um método privado em Diary para colocar esses passos lá
-    messages_capacity *= 2;
-    Message *new_messages = new Message[messages_capacity];
-
-    for (size_t i = 0; i < messages_size; i++)
+    std::size_t found = (*it).content.find(what);
+    if (found != std::string::npos)
     {
-      new_messages[i] = messages[i];
+      founded_messages.push_back(&(*it));
     }
-
-    messages = new_messages;
   }
+  // for (Message ms : messages)
+  // {
+  //   std::size_t found = ms.content.find(what);
+  //   if (found != std::string::npos)
+  //   {
+  //     std::cout << "Diary::search" << &ms << std::endl;
+  //     return &ms;
+  //   }
+  // }
+
+  return founded_messages;
 }
