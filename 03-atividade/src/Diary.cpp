@@ -16,7 +16,7 @@ Diary::~Diary()
 void Diary::add(const std::string &message)
 {
   Message m;
-
+  
   m.content = message;
   m.date.set_from_string(get_current_date());
   m.time.set_from_string(get_current_time());
