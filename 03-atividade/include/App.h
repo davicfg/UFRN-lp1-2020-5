@@ -18,6 +18,7 @@ struct App
   void list_messages();
   int search();
   int search(const std::string& what);
+  void interactive();
   
 };
 

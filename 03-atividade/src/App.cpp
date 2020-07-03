@@ -43,6 +43,10 @@ int App::run(int argc, char const *argv[])
   {
     list_messages();
   }
+  else if(input_action == "interactive")
+  {
+    interactive();
+  }
   else
   {
     return show_help(argv[0]);
@@ -108,4 +112,30 @@ int App::search(const std::string &what)
   }
 
   return 0;
+}
+
+void App::interactive(){
+  std::string option;
+
+  do
+  {
+  std::cout << "Diário 1.0\n" << std::endl;
+  std::cout << "Seleciona uma ação:\n" << std::endl;
+  std::cout << "1) Listar mensagens" << std::endl;
+  std::cout << "2) Adicionar nova mensagem\n" << std::endl;
+  std::cout << "0) Finalizar" << std::endl;
+  
+  std::getline(std::cin, option);
+
+  if(option == "1")
+  {
+    list_messages();
+  }else if(option == "2")
+  {
+    add();
+  }else if(option!= "0")
+  {
+    std::cout << "##Opção inválida##" << std::endl;
+  }
+  } while(option != "0");
 }
