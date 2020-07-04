@@ -10,6 +10,9 @@ App::App(const std::string &filename, const Config config) : diary(filename, con
 
 int App::run(int argc, char const *argv[])
 {
+
+  diary.config.load_config();
+  
   //TODO: pensar em uma forma melhor de trabalhar com o nome do arquivo.
   diary.filename = diary.config.path;
 

@@ -10,8 +10,8 @@ struct Config
   std::string default_format;
   std::string filename;
 
-  void load_config();
-  void create_default_file();
+  int load_config();
+  int create_default_file();
 };
 
 #endif // CONIF_H

@@ -9,7 +9,7 @@ Config::Config(const std::string &name) : filename(name)
 {
   load_config();
 }
-void Config::load_config()
+int Config::load_config()
 {
   //Tentar abrir o arquivo se não chamar create_default_file()
 
@@ -19,7 +19,8 @@ void Config::load_config()
 
   if (!file.is_open())
   {
-    create_default_file();
+    return create_default_file();
+    
   }
 
   std::string file_line;
@@ -50,20 +51,21 @@ void Config::load_config()
   }
 
   file.close();
+  return 0;
 }
 
-void Config::create_default_file()
+int Config::create_default_file()
 {
   //TODO: talvez não seja a melhor forma de fazer isso!
-  std::ofstream ofs;
-  ofs.open(filename, std::ofstream::out | std::ofstream::trunc);
-  ofs.close();
+  // std::ofstream ofs;
+  // ofs.open(filename, std::ofstream::out | std::ofstream::trunc);
+  // ofs.close();
 
-  std::ofstream config_file(filename);
+  std::ofstream config_file(filename, std::ios::app);
 
   config_file << "path=diary.md"<< std::endl;
   config_file << "default_format=%d %t: %m" << std::endl;
-
   config_file.close();
 
+  return 0;
 }
