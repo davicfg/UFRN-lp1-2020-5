@@ -8,7 +8,6 @@
 Config::Config(const std::string &name) : filename(name)
 {
   load_config();
-  std::cout << "Depois de criar ou ler o arquivo de config" << std::endl;
 }
 void Config::load_config()
 {

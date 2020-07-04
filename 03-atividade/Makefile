@@ -1,6 +1,6 @@
-OBJS	= App.o Date.o Diary.o main.o Time.o Util.o
-SOURCE	= src/App.cpp src/Date.cpp src/Diary.cpp src/main.cpp src/Time.cpp src/Util.cpp
-HEADER	= include/App.h include/Date.h include/Diary.h include/main.h include/Time.h include/Util.h
+OBJS	= App.o Date.o Diary.o main.o Time.o Util.o Config.o
+SOURCE	= src/App.cpp src/Date.cpp src/Diary.cpp src/main.cpp src/Time.cpp src/Util.cpp src/Config.cpp
+HEADER	= include/App.h include/Date.h include/Diary.h include/main.h include/Time.h include/Util.h include/Config.h
 OUT	= diary
 CC	 = g++
 FLAGS	 = -g -c -Wall -I include
@@ -26,6 +26,9 @@ Time.o: src/Time.cpp
 
 Util.o: src/Util.cpp
 	$(CC) $(FLAGS) src/Util.cpp -std=c++11
+
+Config.o: src/Config.cpp
+	$(CC) $(FLAGS) src/Config.cpp -std=c++11
 
 clean:
 	rm -f $(OBJS) $(OUT)

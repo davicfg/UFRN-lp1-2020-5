@@ -1,11 +1,12 @@
 #include "Diary.h"
+#include "Config.h"
 #include "Util.h"
 
 #include <iostream>
 #include <sstream>
 #include <string>
 
-Diary::Diary(const std::string &name) : filename(name)
+Diary::Diary(const std::string &name, const Config config) : filename(name), config(config)
 {
 }
 

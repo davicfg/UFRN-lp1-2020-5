@@ -10,3 +10,5 @@
 *.o
 
 03-atividade/diary.md
+
+*.config
