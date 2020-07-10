@@ -1,25 +1,25 @@
 #include "Cliente.hpp"
-
-int Cliente::idCliente;
+#include <iostream>
+int Cliente::idCliente = 0;
 
 Cliente::Cliente()
 {
 }
 
-Cliente::Cliente(const float depositoInicial) : saldo(depositoInicial)
+Cliente::Cliente(float depositoInicial) : saldo(depositoInicial)
 {
-  this->idCliente++;
+  idCliente++;
 }
 
-void Cliente::adicionarSaldo(const float deposito)
+void Cliente::adicionarSaldo(float deposito)
 {
-  if (deposito > 0)
+  if (deposito > 0.0)
   {
-    saldo += deposito;
+    this->saldo += deposito;
   }
 }
 
 float Cliente::getSaldo()
 {
-  return saldo;
+  return this->saldo;
 }

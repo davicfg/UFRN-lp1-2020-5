@@ -5,13 +5,11 @@ class Cliente
 {
 private:
   float saldo;
-
 public:
   static int idCliente;
   Cliente();
-  Cliente(const float depositoInicial);
-
-  void adicionarSaldo(const float deposito);
+  Cliente(float depositoInicial);
+  void adicionarSaldo(float deposito);
   float getSaldo();
 };
 

@@ -11,8 +11,10 @@ private:
 public:
   App();
   void run();
-  Estabelecimento getEstabelecimento();
+  Estabelecimento & getEstabelecimento();
   void setEstabelecimento(const Estabelecimento);
+  void adicionarSaldo();
+  void listarProdutos();
 };
 
 #endif // APP_H
