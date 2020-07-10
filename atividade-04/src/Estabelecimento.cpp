@@ -1,15 +1,18 @@
 #include "Estabelecimento.hpp"
+#include "Produto.hpp"
 
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <algorithm>
 
 Estabelecimento::Estabelecimento()
 {
   Cliente c(30.0);
   this->cliente = c;
   nomeArquivoEstoque = "estoque.csv";
+  carregarEstoque();
 }
 
 Estabelecimento::~Estabelecimento()
@@ -26,34 +29,71 @@ void Estabelecimento::setCliente(Cliente novoCliente)
   this->cliente = novoCliente;
 }
 
-// int Estabelecimento::carregarEstoque()
-// {
-//   std::ifstream file;
+int Estabelecimento::carregarEstoque()
+{
+  std::ifstream file;
 
-//   file.open(nomeArquivoEstoque);
+  file.open(nomeArquivoEstoque);
 
-//   if (!file.is_open())
-//   {
-//     return 0;
-//   }
+  if (!file.is_open())
+  {
+    return 0;
+  }
 
-//   std::string file_line;
+  std::string file_line;
 
-//   int line_number = 1;
+  int codigo;
+  std::string nome;
+  std::string unidadeMedida;
+  float preco;
+  int quantidade;
 
-//   std::string current_date = "";
-//   while (!file.eof())
-//   {
-//     ++line_number;
-//     std::getline(file, file_line);
+  std::getline(file, file_line);
+  while (!file.eof())
+  {
+    if (file_line.size() == 0)
+    {
+      continue;
+    }
 
-//     if (file_line.size() == 0)
-//     {
-//       continue;
-//     }
-//     std::cout << file_line << std::endl;
-//   }
+    std::getline(file, file_line);
+    replace(file_line.begin(), file_line.end(), ',', ' ');
+    file_line.erase(std::remove(file_line.begin(), file_line.end(), '"'), file_line.end());
+    file_line.erase(std::remove(file_line.begin(), file_line.end(), '$'), file_line.end());
 
-//   file.close();
-//   return 0;
-// }
+    std::stringstream stream(file_line);
+    char discard;
+
+    stream >> codigo;
+    stream >> nome;
+    stream >> unidadeMedida;
+    stream >> discard;
+    stream >> preco;
+    stream >> quantidade;
+
+    Produto p(codigo, nome, unidadeMedida, preco);
+
+    estoque[codigo] = quantidade;
+    produtos.push_back(p);
+  }
+
+  file.close();
+  return 0;
+}
+
+std::vector<Produto> & Estabelecimento::getProdutos()
+{
+  return produtos;
+}
+
+std::unordered_map<int,int> &Estabelecimento::getEstoque(){
+  return estoque;
+}
+
+int Estabelecimento::getEstoqueDisponivelProduto(int codigo){
+  std::unordered_map<int,int>::const_iterator got = estoque.find(codigo);
+  if(got != estoque.end()){
+      return got->second;
+  }
+  return -1;
+}
