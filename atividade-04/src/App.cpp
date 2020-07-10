@@ -38,7 +38,10 @@ void App::run()
       listarProdutos();
       break;
     case 3:
-      std::cout << "Ver minha sacola" << std::endl;
+      verSacolaCliente();
+      break;
+    case 4:
+        adicionarProdutoSacola();
       break;
     case 10:
       std::cout << "Finalizar compra" << std::endl;
@@ -69,6 +72,7 @@ void App::adicionarSaldo()
   float deposito;
   std::cout << "Quanto dinheiro vai depositar? ";
   std::cin >> deposito;
+  //TODO alterar para ter um método em estabelecimento, app não precisa saber tudo de cliente.
   getEstabelecimento().getCliente().adicionarSaldo(deposito);
   std::cout << "Seu novo saldo: R$" << getEstabelecimento().getCliente().getSaldo() << std::endl;
 }
@@ -84,6 +88,43 @@ void App::listarProdutos()
     std::cout << "Código: " << codigoProduto << " ";
     std::cout << "Nome: " << produtos[i].getNome() << " ";
     std::cout << "Preço: R$ " << produtos[i].getPrecoUnidade() << " ";
-    std::cout << "Und. disponivel: " << estabelecimento.getEstoqueDisponivelProduto(codigoProduto) << std::endl;
+    std::cout << "Unds. disponível: " << estabelecimento.getEstoqueDisponivelProduto(codigoProduto) << std::endl;
   }
+}
+
+void App::adicionarProdutoSacola(){
+  listarProdutos();
+  int codigoProduto;
+  std::cout << "Escolhar o seu produto pelo código do produto" << std::endl;
+  std::cin >> codigoProduto;
+
+  std::vector<Produto> produtos = estabelecimento.getProdutos();
+  if(estabelecimento.getEstoqueDisponivelProduto(codigoProduto) > 0){
+    float precoProduto = produtos[codigoProduto-1].getPrecoUnidade();
+    int result = estabelecimento.getCliente().adicionarProduto(precoProduto, codigoProduto);
+
+    if(result == 0){
+      std::cout << "Produto adicionado a sacola" << std::endl;
+    }else{
+      std::cout << "Você não tem saldo suficiente para comprar." << std::endl;
+    }
+    estabelecimento.getEstoque()[codigoProduto]-=1;
+  }else{
+    std::cout << "Produto fora de estoque" << std::endl;
+  }
+}
+
+void App::verSacolaCliente(){
+  std::unordered_map<int, int> sacolaCliente = estabelecimento.verSacolaCliente();
+  std::vector<Produto> listarProdutos = estabelecimento.getProdutos();
+  if(sacolaCliente.empty()){
+    std::cout << "Sacola vazia" << std::endl;
+  }
+  for (auto item : sacolaCliente)
+  {
+    std::cout << "Quantidade: " << item.second << " ";
+    std::cout << "Produto:  " << listarProdutos[item.first-1].getNome() << std::endl;
+  }
+  
+  
 }

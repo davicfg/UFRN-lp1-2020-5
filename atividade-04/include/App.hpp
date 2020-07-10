@@ -15,6 +15,8 @@ public:
   void setEstabelecimento(const Estabelecimento);
   void adicionarSaldo();
   void listarProdutos();
+  void adicionarProdutoSacola();
+  void verSacolaCliente();
 };
 
 #endif // APP_H

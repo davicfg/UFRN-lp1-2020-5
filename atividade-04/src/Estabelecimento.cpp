@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <unordered_map>
 
 Estabelecimento::Estabelecimento()
 {
@@ -96,4 +97,8 @@ int Estabelecimento::getEstoqueDisponivelProduto(int codigo){
       return got->second;
   }
   return -1;
+}
+
+std::unordered_map<int, int> Estabelecimento::verSacolaCliente(){
+  return cliente.getSacola();
 }

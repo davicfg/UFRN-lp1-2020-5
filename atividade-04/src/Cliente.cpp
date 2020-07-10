@@ -23,3 +23,16 @@ float Cliente::getSaldo()
 {
   return this->saldo;
 }
+
+int Cliente::adicionarProduto(float preco, int codigo){
+  if(preco <= saldo){
+    sacola[codigo] +=1;
+    saldo -=preco;
+    return 0;
+  }
+  return 1;
+}
+
+std::unordered_map<int, int> Cliente::getSacola(){
+  return sacola;
+}

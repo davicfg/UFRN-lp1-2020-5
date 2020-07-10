@@ -6,7 +6,6 @@
 
 #include <unordered_map>
 #include <vector>
-#include <map>
 #include <string>
 class Estabelecimento
 {
@@ -25,6 +24,8 @@ public:
   void setCliente(Cliente novoCliente);
   int carregarEstoque();
   int getEstoqueDisponivelProduto(int codigo);
+  std::unordered_map<int, int>  verSacolaCliente();
+
 
 };
 
