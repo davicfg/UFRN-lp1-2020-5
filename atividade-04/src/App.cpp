@@ -1,6 +1,6 @@
 #include "App.hpp"
 #include "Estabelecimento.hpp"
-
+#include "Produto.hpp"
 #include <iostream>
 #include <string>
 
@@ -8,6 +8,12 @@ App::App()
 {
   Estabelecimento e;
   estabelecimento = e;
+}
+
+App::~App()
+{
+  estabelecimento.registrarEstoque();
+  estabelecimento.registrarVendas();
 }
 
 void App::run()
@@ -24,6 +30,7 @@ void App::run()
     std::cout << "2) Listar produtos" << std::endl;
     std::cout << "3) Ver minha sacola" << std::endl;
     std::cout << "4) Adicionar um produto a sacola" << std::endl;
+    std::cout << "5) Ver Caixa" << std::endl;
     std::cout << "10) Finalizar compra " << std::endl;
     std::cout << "0) Sair do Programa" << std::endl;
 
@@ -41,10 +48,13 @@ void App::run()
       verSacolaCliente();
       break;
     case 4:
-        adicionarProdutoSacola();
+      adicionarProdutoSacola();
+      break;
+    case 5:
+      verCaixa();
       break;
     case 10:
-      std::cout << "Finalizar compra" << std::endl;
+      finalizarCompra();
       break;
     case 0:
       std::cout << "Até a próxima compra. xD" << std::endl;
@@ -54,7 +64,20 @@ void App::run()
                 << "##### Opção inválida #####" << std::endl;
       break;
     }
-  } while (option != 0);
+  } while (option != 0 and option != 10);
+
+  if(option == 10){
+    std::string novaCompra;
+    std::cout << "Deseja fazer uma nova compra (S/N)?" << std::endl;
+    std::cin >> novaCompra;
+    if (novaCompra == "S")
+    {
+      Cliente x(50.0);
+      Cliente c(50.0);
+      estabelecimento.setCliente(c);
+      run();
+    }
+  }
 }
 
 void App::setEstabelecimento(const Estabelecimento novoEstabelecimento)
@@ -80,7 +103,7 @@ void App::adicionarSaldo()
 void App::listarProdutos()
 {
   std::vector<Produto> produtos = estabelecimento.getProdutos();
-  
+
   int codigoProduto = -1;
   for (size_t i = 0; i < produtos.size(); i++)
   {
@@ -92,39 +115,78 @@ void App::listarProdutos()
   }
 }
 
-void App::adicionarProdutoSacola(){
+//FIX mover lógica para a classe de esbelecimento
+void App::adicionarProdutoSacola()
+{
   listarProdutos();
   int codigoProduto;
   std::cout << "Escolhar o seu produto pelo código do produto" << std::endl;
   std::cin >> codigoProduto;
 
   std::vector<Produto> produtos = estabelecimento.getProdutos();
-  if(estabelecimento.getEstoqueDisponivelProduto(codigoProduto) > 0){
-    float precoProduto = produtos[codigoProduto-1].getPrecoUnidade();
+  if (estabelecimento.getEstoqueDisponivelProduto(codigoProduto) > 0)
+  {
+    float precoProduto = produtos[codigoProduto - 1].getPrecoUnidade();
     int result = estabelecimento.getCliente().adicionarProduto(precoProduto, codigoProduto);
 
-    if(result == 0){
+    if (result == 0)
+    {
       std::cout << "Produto adicionado a sacola" << std::endl;
-    }else{
+    }
+    else
+    {
       std::cout << "Você não tem saldo suficiente para comprar." << std::endl;
     }
-    estabelecimento.getEstoque()[codigoProduto]-=1;
-  }else{
+    estabelecimento.saidaProdutoEstoque(codigoProduto);
+    estabelecimento.adicionarProdutoCaixa(codigoProduto);
+  }
+  else
+  {
     std::cout << "Produto fora de estoque" << std::endl;
   }
 }
 
-void App::verSacolaCliente(){
+void App::verSacolaCliente()
+{
   std::unordered_map<int, int> sacolaCliente = estabelecimento.verSacolaCliente();
   std::vector<Produto> listarProdutos = estabelecimento.getProdutos();
-  if(sacolaCliente.empty()){
+  if (sacolaCliente.empty())
+  {
     std::cout << "Sacola vazia" << std::endl;
   }
   for (auto item : sacolaCliente)
   {
     std::cout << "Quantidade: " << item.second << " ";
-    std::cout << "Produto:  " << listarProdutos[item.first-1].getNome() << std::endl;
+    std::cout << "Produto:  " << listarProdutos[item.first - 1].getNome() << std::endl;
   }
-  
-  
 }
+
+void App::verCaixa()
+{
+  std::unordered_map<int, int> caixa = estabelecimento.caixa();
+  std::vector<Produto> listarProdutos = estabelecimento.getProdutos();
+  float totalVendido = 0.0;
+
+  if (caixa.empty())
+  {
+    std::cout << "Sacola vazia" << std::endl;
+  }
+
+  for (auto item : caixa)
+  {
+    Produto p(listarProdutos[item.first - 1]);
+
+    std::cout << "Quantidade: " << item.second << " ";
+    std::cout << "Produto:  " << p.getNome() << std::endl;
+    totalVendido += p.getPrecoUnidade() * item.second;
+  }
+  std::cout << "Total: R$ " << totalVendido << std::endl;
+}
+
+void App::finalizarCompra()
+{
+  estabelecimento.registrarCliente();
+  //estabelecimento.registrarCaixa();
+}
+
+

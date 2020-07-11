@@ -1,7 +1,7 @@
 OBJS = main.o App.o Cliente.o Estabelecimento.o Produto.o
 SOURCE = src/App.cpp src/main.cpp src/Cliente.cpp src/Estabelecimento.cpp src/Produto.cpp
 HEADER = include/App.hpp include/Cliente.hpp include/Estabelecimento.hpp include/Produto.hpp
-OUT = loja-lp1
+OUT = supermercado
 CC = g++
 FLAGS = -g -c -Wall -I include
 LFLAGS = 
@@ -26,3 +26,4 @@ Produto.o: src/Produto.cpp
 
 clean:
 	rm -f $(OBJS) $(OUT)
+	rm -rf cliente_*

@@ -90,7 +90,7 @@ int Diary::load_messages()
       m.date.set_from_string(current_date);
 
       std::stringstream stream(file_line);
-      char discard;
+      char discard;touch
       std::string time;
 
       stream >> discard;

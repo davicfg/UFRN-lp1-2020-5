@@ -10,6 +10,7 @@ private:
 
 public:
   App();
+  ~App();
   void run();
   Estabelecimento & getEstabelecimento();
   void setEstabelecimento(const Estabelecimento);
@@ -17,6 +18,8 @@ public:
   void listarProdutos();
   void adicionarProdutoSacola();
   void verSacolaCliente();
+  void verCaixa();
+  void finalizarCompra();
 };
 
 #endif // APP_H

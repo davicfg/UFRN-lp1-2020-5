@@ -82,23 +82,104 @@ int Estabelecimento::carregarEstoque()
   return 0;
 }
 
-std::vector<Produto> & Estabelecimento::getProdutos()
+std::vector<Produto> &Estabelecimento::getProdutos()
 {
   return produtos;
 }
 
-std::unordered_map<int,int> &Estabelecimento::getEstoque(){
+std::unordered_map<int, int> &Estabelecimento::getEstoque()
+{
   return estoque;
 }
 
-int Estabelecimento::getEstoqueDisponivelProduto(int codigo){
-  std::unordered_map<int,int>::const_iterator got = estoque.find(codigo);
-  if(got != estoque.end()){
-      return got->second;
+int Estabelecimento::getEstoqueDisponivelProduto(int codigo)
+{
+  std::unordered_map<int, int>::const_iterator got = estoque.find(codigo);
+  if (got != estoque.end())
+  {
+    return got->second;
   }
   return -1;
 }
 
-std::unordered_map<int, int> Estabelecimento::verSacolaCliente(){
+std::unordered_map<int, int> Estabelecimento::verSacolaCliente()
+{
   return cliente.getSacola();
+}
+
+void Estabelecimento::adicionarProdutoCaixa(int codigoProduto)
+{
+  if (getEstoqueDisponivelProduto(codigoProduto) != -1)
+  {
+    vendas[codigoProduto] += 1;
+  }
+}
+
+void Estabelecimento::saidaProdutoEstoque(int codigoProduto)
+{
+  if (getEstoqueDisponivelProduto(codigoProduto) != -1)
+  {
+    estoque[codigoProduto] -= 1;
+  }
+}
+
+std::unordered_map<int, int> Estabelecimento::caixa()
+{
+  return vendas;
+}
+
+void Estabelecimento::registrarCliente()
+{
+  cliente.registrarCompra(produtos);
+}
+
+void Estabelecimento::registrarEstoque()
+{
+  // std::ofstream output(nomeArquivoEstoque);
+  // output << cabecalhoEstoque;
+
+  // for (auto item : estoque)
+  // {
+  //   std::ofstream estoqueEstream(nomeArquivoEstoque, std::ios::app);
+  //   estoqueEstream << produtos[item.first].getCodigo() << ",";
+  //   estoqueEstream << produtos[item.first].getNome() << ",";
+  //   estoqueEstream << produtos[item.first].getUnidadeMedida() << ",";
+  //   estoqueEstream << produtos[item.first].getPrecoUnidade() << ",";
+  //   estoqueEstream << item.second << std::endl;
+  // }
+
+  // for (size_t i = 0; i < produtos.size(); i++)
+  // {
+  //   std::ofstream estoqueEstream(nomeArquivoEstoque, std::ios::app);
+  //   estoqueEstream << produtos[i].getCodigo() << ",";
+  //   estoqueEstream << produtos[i].getNome() << ",";
+  //   estoqueEstream << produtos[i].getUnidadeMedida() << ",";
+  //   estoqueEstream << "\"R$ " << produtos[i].getPrecoUnidade() << "\"" << ",";
+
+  //   int qtd = getEstoqueDisponivelProduto(produtos[i].getCodigo());
+  //   if(qtd != -1){
+  //     estoqueEstream << qtd << std::endl;
+  //   }
+  // }
+}
+
+void Estabelecimento::registrarVendas()
+{
+  std::ofstream output("caixa.csv");
+
+  float totalVendido = 0;
+  for (auto item : vendas)
+  {
+    // arquivo caixa.csv deve conter o código do produto, nome, preço,
+    //a quantidade vendida de cada produto e o total de vendas
+    std::ofstream venda("caixa.csv", std::ios::app);
+    venda << item.first << ",";
+    venda << produtos[item.first - 1].getNome() << ",";
+    venda << produtos[item.first - 1].getPrecoUnidade() << ",";
+    venda << item.second << std::endl;
+
+    totalVendido += item.second * produtos[item.first - 1].getPrecoUnidade();
+  }
+  std::ofstream venda("caixa.csv", std::ios::app);
+  venda << "total, " << totalVendido;
 }
