@@ -135,32 +135,27 @@ void Estabelecimento::registrarCliente()
 
 void Estabelecimento::registrarEstoque()
 {
-  // std::ofstream output(nomeArquivoEstoque);
-  // output << cabecalhoEstoque;
+  std::ofstream output(nomeArquivoEstoque);
+  output << cabecalhoEstoque << std::endl;
+  output.close();
 
-  // for (auto item : estoque)
-  // {
-  //   std::ofstream estoqueEstream(nomeArquivoEstoque, std::ios::app);
-  //   estoqueEstream << produtos[item.first].getCodigo() << ",";
-  //   estoqueEstream << produtos[item.first].getNome() << ",";
-  //   estoqueEstream << produtos[item.first].getUnidadeMedida() << ",";
-  //   estoqueEstream << produtos[item.first].getPrecoUnidade() << ",";
-  //   estoqueEstream << item.second << std::endl;
-  // }
+  std::ofstream estoqueEstream(nomeArquivoEstoque, std::ios::app);
 
-  // for (size_t i = 0; i < produtos.size(); i++)
-  // {
-  //   std::ofstream estoqueEstream(nomeArquivoEstoque, std::ios::app);
-  //   estoqueEstream << produtos[i].getCodigo() << ",";
-  //   estoqueEstream << produtos[i].getNome() << ",";
-  //   estoqueEstream << produtos[i].getUnidadeMedida() << ",";
-  //   estoqueEstream << "\"R$ " << produtos[i].getPrecoUnidade() << "\"" << ",";
+  for (size_t i = 0; i < produtos.size(); i++)
+  {
+    std::cout << produtos[i].getCodigo() << std::endl;
+    estoqueEstream << produtos[i].getCodigo() << ",";
+    estoqueEstream << produtos[i].getNome() << ",";
+    estoqueEstream << produtos[i].getUnidadeMedida() << ",";
+    estoqueEstream << "\"R$ " << produtos[i].getPrecoUnidade() << "\"" << ",";
 
-  //   int qtd = getEstoqueDisponivelProduto(produtos[i].getCodigo());
-  //   if(qtd != -1){
-  //     estoqueEstream << qtd << std::endl;
-  //   }
-  // }
+    int qtd = getEstoqueDisponivelProduto(produtos[i].getCodigo());
+    if(qtd != -1){
+      estoqueEstream << qtd << std::endl;
+    }
+  }
+
+  estoqueEstream.close();
 }
 
 void Estabelecimento::registrarVendas()
