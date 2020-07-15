@@ -1,22 +1,44 @@
-#include "Conta.hpp"
+#include "Fila.hpp"
+#include "Cliente.hpp"
+#include "ClientePJ.hpp"
 
 #include <iostream>
 
 int main(int argc, char const *argv[])
 {
-  Conta c1("12345", "Junior", 0.0), c2("54321", "Matheus", 50320.12);
+  ClientePJ pj1;
+  ClientePJ pj2;
+  ClientePJ pj3;
+  ClientePJ pj4;
 
-  c1.cliente.nome = "Jonesbelson";
+  pj1.setRazaoSocial("pj1");
+  pj2.setRazaoSocial("pj2");
+  pj3.setRazaoSocial("pj3");
+  pj4.setRazaoSocial("pj4");
 
-	c1.depositar(162.0);
-	c2.sacar(25.90);
+  Fila<ClientePJ> filaPJ(4);
+  filaPJ.push(pj1);
+  filaPJ.push(pj2);
+  filaPJ.push(pj3);
+  filaPJ.push(pj4);
 
-	std::cout << c1.saldo << " | " << c2.saldo << "\n";
 
-	c1.transferir(50.0, c2);
+  Cliente pf1;
+  Cliente pf2;
+  Cliente pf3;
+  Cliente pf4;
 
-	std::cout << c1.saldo << " | " << c2.saldo << "\n";
+  pf1.setNome("Blablau1");
+  pf2.setNome("Blablau2");
+  pf3.setNome("Blablau3");
+  pf4.setNome("Blablau4");
 
-  std::cout << c1.cliente.nome << std::endl;
+  Fila<Cliente> filaPF(4);
+  filaPF.push(pf1);
+  filaPF.push(pf2);
+  filaPF.push(pf3);
+  filaPF.push(pf4);
+  
 	return 0;
 }
+

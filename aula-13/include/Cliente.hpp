@@ -10,5 +10,10 @@ public:
   std::string cpf;
 
   Cliente();
+
+  std::string getNome();
+  void setNome(std::string nome);
+  std::string getCpf();
+  void setCpf(std::string cpf);
 };
 #endif // CLIENTE_H
