@@ -143,7 +143,6 @@ void Estabelecimento::registrarEstoque()
 
   for (size_t i = 0; i < produtos.size(); i++)
   {
-    std::cout << produtos[i].getCodigo() << std::endl;
     estoqueEstream << produtos[i].getCodigo() << ",";
     estoqueEstream << produtos[i].getNome() << ",";
     estoqueEstream << produtos[i].getUnidadeMedida() << ",";
@@ -177,4 +176,8 @@ void Estabelecimento::registrarVendas()
   }
   std::ofstream venda("caixa.csv", std::ios::app);
   venda << "total, " << totalVendido;
+}
+
+void Estabelecimento::reabasterEstoque(int quantidade, int codigo){
+  estoque[codigo]+=quantidade;
 }

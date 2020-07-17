@@ -1,6 +1,9 @@
 #include "App.hpp"
 #include "Estabelecimento.hpp"
 #include "Produto.hpp"
+#include "Fornecedor.hpp"
+#include "vector_supermercado.hpp"
+
 #include <iostream>
 #include <string>
 
@@ -8,6 +11,10 @@ App::App()
 {
   Estabelecimento e;
   estabelecimento = e;
+
+  Fornecedor f;
+  fornecedor = f;
+  fornecedor.carregarEstoque();
 }
 
 App::~App()
@@ -31,6 +38,8 @@ void App::run()
     std::cout << "3) Ver minha sacola" << std::endl;
     std::cout << "4) Adicionar um produto a sacola" << std::endl;
     std::cout << "5) Ver Caixa" << std::endl;
+    std::cout << "6) Listar Produtos fornecedor" << std::endl;
+    std::cout << "7) Repassar produto: Fornecedor --> Estavelecimento" << std::endl;
     std::cout << "10) Finalizar compra " << std::endl;
     std::cout << "0) Sair do Programa" << std::endl;
 
@@ -52,6 +61,12 @@ void App::run()
       break;
     case 5:
       verCaixa();
+      break;
+    case 6:
+      listarProdutosFornecedor();
+      break;
+    case 7:
+      reabastercerEstabelecimento();
       break;
     case 10:
       finalizarCompra();
@@ -189,4 +204,32 @@ void App::finalizarCompra()
   //estabelecimento.registrarCaixa();
 }
 
+void App::listarProdutosFornecedor(){
+  vector_supermercado<int> estoqueFornecedor = fornecedor.getEstoque();
+  std::vector<Produto> produtos = estabelecimento.getProdutos();
+  std::cout << "##### Lista de produtos do fornecedor #####" << std::endl;
+  for (int i = 0; i < estoqueFornecedor.vectorSize(); i++)
+  {
+    std::cout << "Codigo: " << produtos[i].getCodigo();
+    std::cout << " Nome Produto: " << produtos[i].getNome();
+    std::cout << " Quantidade:" << estoqueFornecedor.get(i) << std::endl;
+  }
+  
+}
 
+void App::reabastercerEstabelecimento(){
+  int codigoProduto;
+  int quantidade;
+  
+  std::cout << "Qual produto?" << std::endl;
+  std::cin >> codigoProduto;
+
+  std::cout << "Qual a qantidade?" << std::endl;
+  std::cin >> quantidade;
+
+  if(fornecedor.repassarProdutos(quantidade, codigoProduto) == 0){
+    std::cout << "Reabastecimento feito!" << std::endl;
+    estabelecimento.reabasterEstoque(quantidade, codigoProduto);
+
+  }
+}

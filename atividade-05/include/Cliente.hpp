@@ -2,7 +2,8 @@
 #define CLIENTE_H
 
 #include "Produto.hpp"
-
+#include "vector_supermercado.hpp"
+#include "Item.hpp"
 #include<vector>
 #include<unordered_map>
 
@@ -19,6 +20,7 @@ public:
   float getSaldo();
   int adicionarProduto(float preco, int codigo);
   std::unordered_map<int, int> getSacola();
+  int localizerProduto(int codigo);
   void registrarCompra(std::vector<Produto> produtos);
   
 };

@@ -32,6 +32,7 @@ public:
   void registrarCliente();
   void registrarEstoque();
   void registrarVendas();
+  void reabasterEstoque(int quantidade, int codigo);
 
 };
 

@@ -16,7 +16,6 @@ Cliente::Cliente()
 Cliente::Cliente(float depositoInicial) : saldo(depositoInicial)
 {
   idCliente++;
-
 }
 
 void Cliente::adicionarSaldo(float deposito)
@@ -51,13 +50,14 @@ std::unordered_map<int, int> Cliente::getSacola()
 void Cliente::registrarCompra(std::vector<Produto> produtos)
 {
   std::stringstream nomeArquivo;
-  nomeArquivo << "cliente_"<< (idCliente/2) << ".txt";
+  nomeArquivo << "cliente_" << (idCliente / 2) << ".txt";
   std::ofstream output(nomeArquivo.str());
 
   for (auto item : sacola)
   {
     std::ofstream sacola(nomeArquivo.str(), std::ios::app);
-    sacola << "Produto: " << produtos[item.first-1].getNome() << " ";
+    sacola << "Produto: " << produtos[item.first - 1].getNome() << " ";
     sacola << "Quantidade: " << item.second << std::endl;
   }
+  
 }

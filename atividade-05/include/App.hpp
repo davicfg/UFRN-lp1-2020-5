@@ -2,12 +2,13 @@
 #define APP_H
 
 #include "Estabelecimento.hpp"
-
+#include "Fornecedor.hpp"
 class App
 {
 private:
   Estabelecimento estabelecimento;
 
+  Fornecedor fornecedor;
 public:
   App();
   ~App();
@@ -20,6 +21,8 @@ public:
   void verSacolaCliente();
   void verCaixa();
   void finalizarCompra();
+  void listarProdutosFornecedor();
+  void reabastercerEstabelecimento();
 };
 
 #endif // APP_H
