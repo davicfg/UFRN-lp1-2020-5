@@ -11,6 +11,7 @@ App::App()
 {
   Estabelecimento e;
   estabelecimento = e;
+  estabelecimento.carregarEstoque();
 
   Fornecedor f;
   fornecedor = f;
@@ -21,6 +22,7 @@ App::~App()
 {
   estabelecimento.registrarEstoque();
   estabelecimento.registrarVendas();
+  fornecedor.registrarEstoque();
 }
 
 void App::run()

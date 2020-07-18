@@ -13,7 +13,6 @@ Estabelecimento::Estabelecimento()
   Cliente c(30.0);
   this->cliente = c;
   nomeArquivoEstoque = "estoque.csv";
-  carregarEstoque();
 }
 
 Estabelecimento::~Estabelecimento()
@@ -146,11 +145,17 @@ void Estabelecimento::registrarEstoque()
     estoqueEstream << produtos[i].getCodigo() << ",";
     estoqueEstream << produtos[i].getNome() << ",";
     estoqueEstream << produtos[i].getUnidadeMedida() << ",";
-    estoqueEstream << "\"R$ " << produtos[i].getPrecoUnidade() << "\"" << ",";
+    estoqueEstream << "\"R$ " << produtos[i].getPrecoUnidade() << "\""
+                   << ",";
 
     int qtd = getEstoqueDisponivelProduto(produtos[i].getCodigo());
-    if(qtd != -1){
-      estoqueEstream << qtd << std::endl;
+    if (qtd != -1)
+    {
+      estoqueEstream << qtd;
+    }
+    if (i < produtos.size()-1)
+    {
+      estoqueEstream << std::endl;
     }
   }
 
@@ -164,8 +169,6 @@ void Estabelecimento::registrarVendas()
   float totalVendido = 0;
   for (auto item : vendas)
   {
-    // arquivo caixa.csv deve conter o código do produto, nome, preço,
-    //a quantidade vendida de cada produto e o total de vendas
     std::ofstream venda("caixa.csv", std::ios::app);
     venda << item.first << ",";
     venda << produtos[item.first - 1].getNome() << ",";
@@ -178,6 +181,7 @@ void Estabelecimento::registrarVendas()
   venda << "total, " << totalVendido;
 }
 
-void Estabelecimento::reabasterEstoque(int quantidade, int codigo){
-  estoque[codigo]+=quantidade;
+void Estabelecimento::reabasterEstoque(int quantidade, int codigo)
+{
+  estoque[codigo] += quantidade;
 }
