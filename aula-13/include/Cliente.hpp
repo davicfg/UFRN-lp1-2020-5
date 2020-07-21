@@ -1,19 +1,14 @@
 #if !defined(CLIENTE_H)
 #define CLIENTE_H
 
-#include <string>
-
 class Cliente
 {
+private:
+  int cep;
 public:
-  std::string nome;
-  std::string cpf;
-
-  Cliente();
-
-  std::string getNome();
-  void setNome(std::string nome);
-  std::string getCpf();
-  void setCpf(std::string cpf);
+  Cliente(int cep);
+  int getCep();
+  void setCep(int novoCep);
 };
+
 #endif // CLIENTE_H

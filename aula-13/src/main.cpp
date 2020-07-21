@@ -1,5 +1,5 @@
 #include "Fila.hpp"
-#include "Cliente.hpp"
+#include "ClientePF.hpp"
 #include "ClientePJ.hpp"
 
 #include <iostream>
@@ -23,17 +23,17 @@ int main(int argc, char const *argv[])
   filaPJ.push(pj4);
 
 
-  Cliente pf1;
-  Cliente pf2;
-  Cliente pf3;
-  Cliente pf4;
+  ClientePF pf1(11);
+  ClientePF pf2(11);
+  ClientePF pf3(11);
+  ClientePF pf4(11);
 
   pf1.setNome("Blablau1");
   pf2.setNome("Blablau2");
   pf3.setNome("Blablau3");
   pf4.setNome("Blablau4");
 
-  Fila<Cliente> filaPF(4);
+  Fila<ClientePF> filaPF(4);
   filaPF.push(pf1);
   filaPF.push(pf2);
   filaPF.push(pf3);

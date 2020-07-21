@@ -1,25 +1,13 @@
 #include "Cliente.hpp"
 
-Cliente::Cliente (){
-
+Cliente::Cliente(int cep){
+  this->cep = cep;
 }
 
-  std::string Cliente::getNome()
-  {
-    return this->nome;
-  }
+int Cliente::getCep(){
+  return this->cep;
+}
 
-  void Cliente::setNome(std::string nome)
-  {
-    this->nome = nome;
-  }
-
-  std::string Cliente::getCpf()
-  {
-    return this->cpf;
-  }
-
-  void Cliente::setCpf(std::string cpf)
-  {
-    this->cpf = cpf;
-  }
+void Cliente::setCep(int novoCep){
+  this->cep = novoCep;
+}

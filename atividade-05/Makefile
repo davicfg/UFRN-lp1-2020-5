@@ -34,3 +34,4 @@ Fornecedor.o: src/Fornecedor.cpp
 clean:
 	rm -f $(OBJS) $(OUT)
 	rm -rf cliente_*
+	rm -rf caixa.csv
